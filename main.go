@@ -50,8 +50,8 @@ func main() {
 		Songs = append(Songs, t)
 	}
 
-	bar = progressbar.New(len(files))
-	log.Printf("\nRelocating song\n")
+	moveProgressBar := progressbar.New(len(files))
+	log.Printf("\nRelocating songs\n")
 	for _, song := range Songs {
 		err := CreateAlbumDir(song, *directory)
 		if err != nil {
@@ -61,7 +61,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		bar.Add(1)
+		moveProgressBar.Add(1)
 	}
 }
 
@@ -75,13 +75,17 @@ func GetTags(f string) (Song, error) {
 	}
 
 	if tag.Artist() == "" {
-		log.Fatalf("Empty Artist tag found on %s, aborting\n", f)
-		os.Exit(1)
+		log.Printf("Empty Artist tag found on %s\n", f)
+		s.Artist = "Unknow"
+	} else {
+		s.Artist = tag.Artist()
 	}
 
 	if tag.Album() == "" {
-		log.Fatalf("Empty Album tag found on %s, aborting\n", f)
-		os.Exit(1)
+		log.Printf("Empty Album tag found on %s\n", f)
+		s.Album = "Unknow"
+	} else {
+		s.Album = tag.Album()
 	}
 
 	defer tag.Close()
