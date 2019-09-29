@@ -76,14 +76,14 @@ func GetTags(f string) (Song, error) {
 
 	if tag.Artist() == "" {
 		log.Printf("Empty Artist tag found on %s\n", f)
-		s.Artist = "Unknow"
+		s.Artist = "Unknown"
 	} else {
 		s.Artist = tag.Artist()
 	}
 
 	if tag.Album() == "" {
 		log.Printf("Empty Album tag found on %s\n", f)
-		s.Album = "Unknow"
+		s.Album = "Unknown"
 	} else {
 		s.Album = tag.Album()
 	}
